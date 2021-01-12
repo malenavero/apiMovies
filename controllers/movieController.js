@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 class movieController {
 
     constructor(movieService){
@@ -54,22 +56,28 @@ class movieController {
     };
 
     async postMovie(req, res){
+
         const { name, category, type } = req.body;
-        const  image  = req.file.path
-        if( name && category  && image ) {
+
+        if( name && category && type ) {
+            
             try {
                 const data = {
                     name: name.toLowerCase(),
                     category: category.toLowerCase(),
-                    image: image,
                     type: type
                 };
+
+                if(req.file){
+                    data.image = req.file.path
+                };
+
                 await this.movieService.postMovie(data);
                 res.status(200).send("Pelicula agregada con exito")
             }catch(err){
                 console.log(err);
                 res.status(500).send("Fallo el proceso de creacion")
-            }
+            };
         }else{
             res.status(400).send("Falta informacion necesaria");
         };
@@ -84,8 +92,6 @@ class movieController {
             if(req.file){
                 data.image = req.file.path
                 };
-      
-
             await this.movieService.editMovie(id, data);
             res.status(200).send("Pelicula modificada con exito")
         }else{
@@ -99,7 +105,21 @@ class movieController {
 
         if (isMovie){
             try {
+
+                let movieImage = await this.movieService.getMovieById(id);
+                movieImage = movieImage.image;
+
+                try {
+                    fs.unlinkSync(movieImage);
+                    console.log('image successfully deleted ');
+                  } catch (err) {
+                    console.log(err, 'no se puedo borrar la imagen')
+                   
+                  }
+
                 await this.movieService.deleteMovie(id);
+
+
                 res.status(200).send("Pelicula borrada con exito");
             }catch(err){
                 console.log(err)
