@@ -122,8 +122,6 @@ class movieController {
                     };
 
                 await this.movieService.deleteMovie(id);
-
-
                 res.status(200).send("Pelicula borrada con exito");
             }catch(err){
                 console.log(err)
