@@ -69,7 +69,6 @@ class movieController {
                 if(req.file){
                     data.image = req.file.path
                 };
-
                 await this.movieService.postMovie(data);
                 res.status(200).send("Pelicula agregada con exito")
             }catch(err){
