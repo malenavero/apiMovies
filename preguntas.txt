@@ -1,0 +1,9 @@
+1) toda la config de multer puede ir en utils?
+3) la base de datos la subimos a atlas?
+4) en el movie edit el put tiene que ir si o si en json? si quisiera modificar la imagen? por que no toma el req.body en form.data de postman?
+5) se puede usar mas de una middleware? estaria bien usar para chequear si el id existe en la base d datos (se repite en getbyid, edit, delete)
+6) como meter el lowerCase en edit ya que no se que variables vienen como para desestructurar?
+7) borrar la imagen del upload cuando borro la peli de la db
+8) en el esquema de rutas no hay ruta de login, como chequeamos que este autenticado si no lo logueamos?
+9) middleware para ver si esta autenticado pero no admin
+10) borrar verify?
