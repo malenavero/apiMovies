@@ -1,8 +1,0 @@
-1) toda la config de multer puede ir en utils?
-
-
-6) como meter el lowerCase en edit ya que no se que variables vienen como para desestructurar?bucle?
-7) borrar la imagen del upload cuando borro la peli de la db
-8) en el esquema de rutas no hay ruta de login, como chequeamos que este autenticado si no lo logueamos?
-9) middleware para ver si esta autenticado pero no admin
-10) borrar verify?
