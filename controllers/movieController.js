@@ -6,7 +6,7 @@ class movieController {
         this.movieService = movieService
     };
 
-    //funcion para chequear si existe el di en la db
+    //funcion para chequear si existe el id en la db.
     async checkId(id) {
         try {
             await this.movieService.checkMovie(id);
@@ -17,7 +17,6 @@ class movieController {
     };
 
     async getMovies(req, res){
-        //paginado
         const limit = 5;
         let page = 1;
 
@@ -26,7 +25,7 @@ class movieController {
         };
 
         const offset = limit * (page - 1);
-        //
+        
         try {
             const allMovies = await this.movieService.getMovies(limit, offset);
             res.status(200).send(allMovies)
@@ -34,7 +33,6 @@ class movieController {
             console.log(err)
             res.status(500).send("La busqueda no pudo ser procesada")
         };
-        
     };
 
     async getMovieById(req, res){
@@ -67,7 +65,7 @@ class movieController {
                     category: category.toLowerCase(),
                     type: type
                 };
-
+                //si hay imagen la agrego al objeto data
                 if(req.file){
                     data.image = req.file.path
                 };
@@ -89,9 +87,17 @@ class movieController {
 
         if (isMovie){
             const data = req.body;
+
+            //bucle para normalizar la data
+            for ( let field in data ) {
+                data[field] = data[field].toLowerCase() 
+            };
+
+            //si existe req.file agrego img a data para update 
             if(req.file){
                 data.image = req.file.path
                 };
+
             await this.movieService.editMovie(id, data);
             res.status(200).send("Pelicula modificada con exito")
         }else{
@@ -105,17 +111,15 @@ class movieController {
 
         if (isMovie){
             try {
-
-                let movieImage = await this.movieService.getMovieById(id);
-                movieImage = movieImage.image;
+                const movie = await this.movieService.getMovieById(id);
+                const movieImage = movie.image;
 
                 try {
                     fs.unlinkSync(movieImage);
-                    console.log('image successfully deleted ');
-                  } catch (err) {
-                    console.log(err, 'no se puedo borrar la imagen')
-                   
-                  }
+                    console.log('image successfully deleted');
+                    }catch (err){
+                    console.log(err, 'no image asociated')               
+                    };
 
                 await this.movieService.deleteMovie(id);
 

@@ -80,6 +80,10 @@ class userController {
 
         if (isUser){
             const data = req.body;
+            for ( let field in data ) {
+                data[field] = data[field].toLowerCase() 
+            };
+            console.log(data)
             await this.userService.editUser(id, data);
             res.status(200).send("Usuario modificado con exito")
         }else{

@@ -11,10 +11,11 @@ const userService = require('./../services/userService');
 const userInstance = new userController(new userService());
 
 const checkAdmin = require('../utils/checkAdmin');
-const checkLogin = require('../utils/checkLogin')
+const checkLogin = require('../utils/checkLogin');
 
+
+//CONFIG MULTER
 const multer = require('multer');
-//configurar el storage
 const storage = multer.diskStorage({
   destination: (req, file, cb)=> {
     cb(null, "./uploads");
@@ -23,13 +24,12 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + Date.now() + ".png");
   },
 });
-
 const upload = multer({ storage: storage });
 
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  res.send("holu");
+  res.send("index");
 });
 
 /*LOGIN Y VERIFY*/
