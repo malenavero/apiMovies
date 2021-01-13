@@ -29,7 +29,7 @@ const upload = multer({ storage: storage });
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  res.send("index");
+  res.send("Bienvenide a Movies CourseIt");
 });
 
 /*LOGIN Y VERIFY*/
